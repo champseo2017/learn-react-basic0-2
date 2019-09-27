@@ -1,16 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router, browserHistory } from "react-router";
+import routes from "./routes";
+import "./index.css";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducers from "./reducers";
 
-import "./styles.css";
+const store = createStore(reducers);
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-    </div>
-  );
-}
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={browserHistory} routes={routes} />
+  </Provider>,
+  document.getElementById("root")
+);
