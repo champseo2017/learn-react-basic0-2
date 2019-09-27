@@ -1,32 +1,33 @@
 import React, { Component } from "react";
 import UserList from "../components/Users/UserList";
+import { connect } from "react-redux";
+import { loadUsers } from "../actions";
+import { checknull } from "../exfunction";
 
 class User extends Component {
-  state = { data: null, isLoading: false };
-
   componentDidMount() {
-    this.setState({ isLoading: true });
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then(result => result.json())
-      .then(result => this.setState({ data: result, isLoading: false }));
+    this.props.dispatch(loadUsers());
   }
 
   render() {
-    const { data, isLoading } = this.state;
-    let dataresult = "";
-    if (data == null) {
-      return null;
-    } else {
-      dataresult = data;
-    }
+    const { users } = this.props;
+    let checkdatanull = checknull(users);
     return (
       <div>
         <h1>Users</h1>
-        {isLoading && <div>Loading...</div>}
-        <UserList data={dataresult} />
+        <UserList data={checkdatanull} />
       </div>
     );
   }
 }
 
-export default User;
+const mapStateToProps = state => {
+  return {
+    users: state.users
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(User);

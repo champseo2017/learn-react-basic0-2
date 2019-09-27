@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import User from "./User";
+import Album from "../Albums/Album";
 import { checknull } from "../../exfunction";
 
-class UserList extends Component {
+class AlbumList extends Component {
   render() {
     const { data } = this.props;
-    let checkdatanull = checknull(data.data);
+    let checkdatanull = checknull(data);
     return (
       <div>
         {checkdatanull &&
           checkdatanull.map(e => {
-            return <User data={e} key={e.id} />;
+            return <Album data={e} key={e.id} />;
           })}
       </div>
     );
   }
 }
 
-export default UserList;
+export default AlbumList;
